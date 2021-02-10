@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        $videos = auth()->user()->videos()->get();
+        $videos = auth()->user()->videos()->paginate(3);
         return view('home',compact('videos'));
     }
 }
