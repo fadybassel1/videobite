@@ -22,7 +22,8 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('home');
+    {   
+        $videos = auth()->user()->videos()->get();
+        return view('home',compact('videos'));
     }
 }
