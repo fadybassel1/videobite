@@ -20,4 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/video/{id}', 'HomeController@viewVideo')->name('viewVideo');
 Route::resource('files', VideoController::class);

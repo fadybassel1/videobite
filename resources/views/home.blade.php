@@ -8,17 +8,28 @@
         <div class="row justify-content-around">
             @forelse ($videos as $video)
                 <div class="card text-center" style="width: 20rem; margin-bottom: 2%">
-                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                        <iframe src="{{ $video->link }}" title="{{ $video->title }}" allowfullscreen></iframe>
-                    
-                    </div>
+                    @if ($video->flag == 1)
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <video height="auto" width="auto" controls>
+                                    <source src="{{ $video->link }}">
+                                </video>
+                            </div>
+                        </div>
+                    @else
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                            <iframe src="{{ $video->link }}/?controls=1" title="{{ $video->title }}"
+                                allowfullscreen></iframe>
+                        </div>
+                    @endif
+
                     <div class="card-body">
-                        <h5  class="card-title">{{ $video->title }}</h5>
+                        <h5 class="card-title">{{ $video->title }}</h5>
                         <p>
                             {{ $video->created_at->diffForHumans() }}
                         </p>
-                        <a href="#!" class="btn btn-indigo">View</a>
-                      
+                        <a href="{{ route('viewVideo', $video->id) }}" class="btn btn-indigo">View</a>
+
                     </div>
                 </div>
 

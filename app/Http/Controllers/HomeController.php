@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\models\Video;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -22,8 +23,18 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   
+    {
         $videos = auth()->user()->videos()->paginate(3);
-        return view('home',compact('videos'));
+        return view('home', compact('videos'));
+    }
+
+    public function viewVideo($video)
+    {
+        $video= Video::where('id',$video)->with('summary')->with('timestamps')->first();
+        if (auth()->user()->id == $video->user_id) {
+            //dd($video);
+           return view('viewVideo',compact('video'));
+        }
+      
     }
 }

@@ -44,7 +44,7 @@ class VideoController extends Controller
 
         $videoUpload = new Video();
         $videoUpload->title = $FileName;
-        $videoUpload->link = "public/videos/$FileName";
+        $videoUpload->link = "/videos/$FileName";
         $videoUpload->flag = "1";
         $videoUpload->user_id = auth()->user()->id;
         $videoUpload->save();

@@ -31,6 +31,7 @@
     </div>
 
     <div class="container">
+        <div id="message"></div>
         <form method="post" action="{{ route('files.store') }}" enctype="multipart/form-data" class="dropzone" id="dropzone">
             @csrf
             <div class="dz-message needsclick">
@@ -45,11 +46,11 @@
     <script type="text/javascript">
         Dropzone.options.dropzone =
         {
-            maxFilesize: 12,
+            maxFilesize: 30,
             resizeQuality: 1.0,
 
             addRemoveLinks: true,
-            timeout: 60000,
+            timeout: 90000,
             removedfile: function(file) 
             {
                 var name = file.upload.filename;
@@ -71,7 +72,7 @@
                     fileRef.parentNode.removeChild(file.previewElement) : void 0;
             },
             success: function (file, response) {
-                console.log(response);
+                document.getElementById('message').innerHTML ="<div class='alert alert-success text-center' >File uploaded successfully<div>"
             },
             error: function (file, response) {
                 return false;
