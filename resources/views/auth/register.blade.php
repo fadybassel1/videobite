@@ -3,16 +3,17 @@
 @section('content')
 <div class="container-fluid">
     <div class=" text-center">
-        <h1 class="display-1" style="color:#646ecb">Join us</h1>
+        <h1 class="display-1 d-none d-md-block" style="color:#646ecb">Join us</h1>
+        <h1 class="display-3 d-md-none" style="color:#646ecb">Join us</h1>
     </div>
-    <div class="row justify-content-center">
+    <div class="row text-center">
 
-        <div class="col-xlg align-self-center"> 
+        <div class="col-lg-6 col-sm-12"> 
                 <img src="register.svg" width="80%" alt="">
             </div>
        
-        <div class="col-md align-self-center">
-            <div style="margin-right: 15%" class="card card border border-info">
+        <div style="margin: auto" class="col-lg-5 col-sm-12">
+            <div  class="card card border border-info">
                 <div style="background-color:#646ecb" class="card-header text-white text-center">{{ __('Register') }}</div>
 
                 <div class="card-body">

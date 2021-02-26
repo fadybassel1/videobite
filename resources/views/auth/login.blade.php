@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row justify-content-center">
-            <div class="col-xlg align-self-center"> 
-                <img src="videosvg.svg" width="90%" alt="">
+    <div class="row">
+            <div class="col-lg-6 col-xsm-12"> 
+                <img src="videosvg.svg" width="100%" alt="">
             </div>
        
-        <div class="col-md align-self-center">
-            <div style="margin-right: 15%" class="card border border-info shadow-1">
+        <div style="margin:auto" class="col-lg-6 col-xsm-12">
+            <div class="card border border-info shadow-1">
                 <div style="background-color:#646ecb" class="card-header text-white text-center">{{ __('Login') }}</div>
 
                 <div class="card-body">

@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h1 class="display-4 text-center" style="color:#646ecb"> {{ $video->title }}</h1>
+        <h4 class="display-4 text-center d-none d-md-block" style="color:#646ecb"> {{ $video->title }}</h4>
+        <h5 class="display-5 text-center  d-md-none" style="color:#646ecb"> {{ $video->title }}</h5>
         <div class="row justify-content-around">
             <div class="col-lg-9">
                 @if ($video->flag == 1)
