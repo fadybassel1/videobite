@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\models\Summary;
+use Illuminate\Support\Facades\Http;
 use App\models\Video;
 use Illuminate\Http\Request;
 
@@ -48,9 +50,26 @@ class VideoController extends Controller
         $videoUpload->flag = "1";
         $videoUpload->user_id = auth()->user()->id;
         $videoUpload->save();
-        return response()->json(['success' => $FileName]);
+        $message=$this->send_to_api($videoUpload->link,$videoUpload->id);
+        return response()->json(['success' => $FileName,'message'=>$message]);
     }
 
+
+    private function send_to_api($link,$id){
+        $link = str_replace($link,'/','-');
+        $response = Http::get("http://192.168.0.15:8000/processvideo/$link/$id");
+        if($response->status()==200)
+        return "video sent to be processed";
+        else return "Something went wrong while sending the video to be processed";
+    }
+    public function updateSummary(Request $request)
+    {
+        $results = json_decode($request->getContent(), true);
+        $summary = new Summary(['video_id' => $results['video_id'],'summary'=>$results['summary']]);
+        $video = Video::find($results['video_id']);
+        $video->summary()->save($summary);
+        return response()->json(['success' => 'saved successfully']);
+    }
     /**
      * Display the specified resource.
      *

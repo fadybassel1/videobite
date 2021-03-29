@@ -32,6 +32,7 @@
 
     <div class="container">
         <div id="message"></div>
+        <div id="info"></div>
         <form method="post" action="{{ route('files.store') }}" enctype="multipart/form-data" class="dropzone" id="dropzone">
             @csrf
             <div class="dz-message needsclick">
@@ -72,7 +73,8 @@
                     fileRef.parentNode.removeChild(file.previewElement) : void 0;
             },
             success: function (file, response) {
-                document.getElementById('message').innerHTML ="<div class='alert alert-success text-center' >File uploaded successfully<div>"
+                document.getElementById('message').innerHTML ="<div class='alert alert-success text-center' >File uploaded successfully</div>"
+                document.getElementById('info').innerHTML ="<div class='alert alert-info text-center' >"+response.message+"</div>"
             },
             error: function (file, response) {
                 return false;
