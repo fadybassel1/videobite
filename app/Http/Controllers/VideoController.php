@@ -132,7 +132,15 @@ class VideoController extends Controller
     {
 
         $fileUpload = Video::find($id);
-
+        $summary = Summary::where('video_id', $id);
+        if($fileUpload->flag == 1)
+        {
+            $path = public_path().$fileUpload->link;
+            if(file_exists($path))
+                unlink($path);
+        }
+        
+        $summary->delete();
         $fileUpload->delete();
 
         return redirect()->back()
