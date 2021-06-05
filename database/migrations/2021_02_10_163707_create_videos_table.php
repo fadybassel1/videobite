@@ -19,8 +19,10 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->string('link');
             $table->boolean('flag');
+            $table->BigInteger('active_summary')->unsigned();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('active_summary')->references('id')->on('summaries');
         });
     }
 

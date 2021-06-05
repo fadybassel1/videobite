@@ -28,13 +28,5 @@ class HomeController extends Controller
         return view('home', compact('videos'));
     }
 
-    public function viewVideo($video)
-    {
-        $video= Video::where('id',$video)->with('summary')->with('timestamps')->first();
-        if (auth()->user()->id == $video->user_id) {
-            //dd($video);
-           return view('viewVideo',compact('video'));
-        }
-      
-    }
+    
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\models\Keyword;
 use App\models\Summary;
 use Illuminate\Support\Facades\Http;
 use App\models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
 {
@@ -40,24 +42,27 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        $image = $request->file('file');
-        $FileName = $image->getClientOriginalName();
-        $image->move(public_path('videos'), $FileName);
-
+        $video = $request->file('file');
+        $FileName = explode('.',$video->getClientOriginalName())[0];
+        $FileUniqueName = uniqid($FileName.'$').".".$video->getClientOriginalExtension();
+        $path = Storage::putFileAs(
+            'public/userVideos/'.auth()->user()->id,$video,$FileUniqueName
+        );
         $videoUpload = new Video();
-        $videoUpload->title = $FileName;
-        $videoUpload->link = "/videos/$FileName";
+        $videoUpload->title = $request->title;
+        $videoUpload->link = "/storage/userVideos/".auth()->user()->id."/".$FileUniqueName;
         $videoUpload->flag = "1";
         $videoUpload->user_id = auth()->user()->id;
         $videoUpload->save();
-        $message=$this->send_to_api($videoUpload->link,$videoUpload->id);
-        return response()->json(['success' => $FileName,'message'=>$message]);
+        $message=$this->send_to_api($videoUpload->link,$FileName,$videoUpload->id);
+        return redirect()->back()->with('info',$message);
+        //return response()->json(['success' => $FileName]);
     }
 
 
-    private function send_to_api($link,$id){
-        $link = str_replace($link,'/','-');
-        $response = Http::get("http://192.168.0.15:8000/processvideo/$link/$id");
+    private function send_to_api($link,$FileName,$id){
+        $link = str_replace('/','-',$link);
+        $response = Http::get("http://192.168.0.16:8000/processvideo/$link/$id/$FileName");
         if($response->status()==200)
         return "video sent to be processed";
         else return "Something went wrong while sending the video to be processed";
@@ -66,19 +71,32 @@ class VideoController extends Controller
     {
         $results = json_decode($request->getContent(), true);
         $summary = new Summary(['video_id' => $results['video_id'],'summary'=>$results['summary']]);
+        // $keywords =[];
+        // foreach ($results['keywords'] as $keyword) {
+        //     $keywords[] =  new Keyword(['video_id' => $results['video_id'],'keyword'=>$keyword]);
+        // }
+    
         $video = Video::find($results['video_id']);
-        $video->summary()->save($summary);
+        $summary =$video->summary()->save($summary);
+        $video->active_summary = $summary->id;
+        $video->save();
+        // $video->active_summary=
+        // $video->keywords()->save($keywords);
         return response()->json(['success' => 'saved successfully']);
     }
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Video  $fileUpload
+     * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function show(Video $fileUpload)
+    public function show($video)
     {
-        //
+        $video= Video::where('id',$video)->with('summary')->with('timestamps')->with('keywords')->first();
+        if (auth()->user()->id == $video->user_id) {
+            //dd($video);
+           return view('viewVideo',compact('video'));
+        }
     }
 
     /**
