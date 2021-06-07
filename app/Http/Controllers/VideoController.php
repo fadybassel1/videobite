@@ -80,10 +80,15 @@ class VideoController extends Controller
     {
         $results = json_decode($request->getContent(), true);
         $summary = new Summary(['video_id' => $results['video_id'],'summary'=>$results['summary']]);
-        // $keywords =[];
-        // foreach ($results['keywords'] as $keyword) {
-        //     $keywords[] =  new Keyword(['video_id' => $results['video_id'],'keyword'=>$keyword]);
-        // }
+        foreach ($results['keywords'] as $keyword) {
+            $k =  new Keyword(['video_id' => $results['video_id'],'keyword'=> $keyword ]);
+            $k->save();
+        }
+        
+        foreach ($results['timestamps'] as $timestamp) {
+            $t =  new Timestamp(['video_id' => $results['video_id'],'start'=> $timestamp['start'],'end'=> $timestamp['end'],'description'=> $timestamp['sentence'] ]);
+            $t->save();
+        }
     
         $video = Video::find($results['video_id']);
         $summary =$video->summary()->save($summary);
