@@ -42,6 +42,15 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->file('file')->extension() != "mp4")
+        {
+            return redirect()->back()->with('error', "File must be .mp4");
+        }
+        if($request->title == null || $request->title == "")
+        {
+            return redirect()->back()->with('error', "Video name is required");
+        }
+        
         $video = $request->file('file');
         $FileName = explode('.',$video->getClientOriginalName())[0];
         $FileUniqueName = uniqid($FileName.'$').".".$video->getClientOriginalExtension();
@@ -54,7 +63,7 @@ class VideoController extends Controller
         $videoUpload->flag = "1";
         $videoUpload->user_id = auth()->user()->id;
         $videoUpload->save();
-        $message=$this->send_to_api($videoUpload->link,$FileName,$videoUpload->id);
+        $message = $this->send_to_api($videoUpload->link,$FileName,$videoUpload->id);
         return redirect()->back()->with('info',$message);
         //return response()->json(['success' => $FileName]);
     }
