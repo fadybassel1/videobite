@@ -51,7 +51,16 @@ Route::group(['middleware' => ['role:admin'] , 'prefix'=>'admin'], function () {
 
 });
 
-
+/*
+NOTIFICATIONS TEST
+///////////////////
+use App\models\Video;
+use App\Notifications\DataUpdated;
+Route::get('/notification', function () {
+    $video = Video::find(2);
+    return (new DataUpdated($video))
+                ->toMail($video->user, $video);
+});*/
 
 
 // Route::get('/assignrole', function (){

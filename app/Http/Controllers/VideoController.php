@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\DataUpdated;
 use App\models\Keyword;
 use App\models\Summary;
 use App\models\Timestamp;
@@ -96,6 +97,8 @@ class VideoController extends Controller
         $video->save();
         // $video->active_summary=
         // $video->keywords()->save($keywords);
+        /////////////////////////////////////////////////////////eb3at notification hena
+        $user->notify(new DataUpdated($video));
         return response()->json(['success' => 'saved successfully']);
     }
     /**
