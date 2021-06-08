@@ -45,16 +45,23 @@ Route::group(['middleware' => ['role:user']], function () {
 });
 
 
-
-// admin routes.
-
-Route::group(['middleware' => ['role:admin'] , 'prefix'=>'admin' , 'namespace'=>'Admin'], function () {
+Route::group(['middleware' => ['role:admin'] , 'prefix'=>'admin'], function () {
    
-    Route::get('/dashboard', 'HomeController@index')->name('admin.dashboard');
+    Route::get('/dashboard', 'Admin\HomeController@index')->name('admin.dashboard');
+    Route::post('/request/changeStatus', 'RequestController@changeStatus')->name('requestChangeStatus');
 
 });
 
-
+/*
+NOTIFICATIONS TEST
+///////////////////
+use App\models\Video;
+use App\Notifications\DataUpdated;
+Route::get('/notification', function () {
+    $video = Video::find(2);
+    return (new DataUpdated($video))
+                ->toMail($video->user, $video);
+});*/
 
 
 // Route::get('/assignrole', function (){
