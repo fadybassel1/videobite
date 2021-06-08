@@ -7,7 +7,7 @@
 <div class="container">
     <div class="card">
         <div class="card-body text-center">
-            welcome {{ auth()->user()->name }}
+            Welcome {{ ucfirst(auth()->user()->name) }}!
         </div>
     </div>
 </div>
@@ -18,7 +18,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    Latest Requests
+                    Latest requests
                 </div>
                 @if (session('info'))
                 <div class="alert alert-info">
@@ -84,7 +84,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    Latest videos with summaries.
+                    Latest videos with summaries
                 </div>
 
                 <div class="card-body">

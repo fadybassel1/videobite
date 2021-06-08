@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container text-center">
-        <h4 class="display-4 alert alert-info text-center d-none d-md-block" style="color:#646ecb"> Hello, {{ auth()->user()->name }} here
+        <h4 class="display-4 alert alert-info text-center d-none d-md-block" style="color:#646ecb"> Hello, {{ ucfirst(auth()->user()->name) }} here
             are
             your videos</h4>
         <h5 class="display-5 alert alert-info text-center  d-md-none" style="color:#646ecb"> Hello, {{ auth()->user()->name }} here

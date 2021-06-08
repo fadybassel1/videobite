@@ -12,8 +12,8 @@
                     <thead class="thead-light">
                         <tr>
                             <th style="width: 70%" scope="col">Posted Summary</th>
-                            <th style="width: 15%" scope="col">status</th>
-                            <th style="width: 15%" scope="col">date posted</th>
+                            <th style="width: 15%" scope="col">Status</th>
+                            <th style="width: 15%" scope="col">Date Posted</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,7 +25,7 @@
                     </tbody>
                 </table>
             @empty
-                <div class="alert alert-info text-center"> No Previous Requests. </div>
+                <div class="alert alert-info text-center"> No Previous Requests!</div>
             @endforelse
 
 
