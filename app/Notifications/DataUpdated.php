@@ -31,7 +31,7 @@ class DataUpdated extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail','database'];
     }
 
     /**
@@ -58,11 +58,10 @@ class DataUpdated extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable, $video)
+    public function toDatabase($notifiable)
     {
         return [
-            'video_id' => $video->id,
-            'summary' => $video->summary,
+            'data' => 'Data for the video titled "'. $this->video->title .'" you uploaded is now ready.'
         ];
     }
     
@@ -70,7 +69,7 @@ class DataUpdated extends Notification implements ShouldQueue
     {
         return [
             'mail' => 'mail-queue',
-            // 'array' => 'array-queue',
+            'database' => 'database-queue',
         ];
     }
 }
