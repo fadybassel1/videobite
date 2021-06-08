@@ -11,14 +11,16 @@ class DataUpdated extends Notification implements ShouldQueue
 {
     use Queueable;
 
+
+    private $video;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($video)
     {
-        //
+        $this->video = $video;
     }
 
     /**
@@ -29,7 +31,7 @@ class DataUpdated extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail','array'];
+        return ['mail'];
     }
 
     /**
@@ -38,9 +40,9 @@ class DataUpdated extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable, $video)
+    public function toMail($notifiable)
     {   
-        $url = url('/video/'.$video->id);
+        $url = url('/video/'.$this->video->id);
 
         return (new MailMessage)
                     ->subject('Summary Generated')
@@ -68,7 +70,7 @@ class DataUpdated extends Notification implements ShouldQueue
     {
         return [
             'mail' => 'mail-queue',
-            'array' => 'array-queue',
+            // 'array' => 'array-queue',
         ];
     }
 }
