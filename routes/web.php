@@ -43,9 +43,10 @@ Route::group(['middleware' => ['role:user']], function () {
 });
 
 
-Route::group(['middleware' => ['role:admin'] , 'prefix'=>'admin' , 'namespace'=>'Admin'], function () {
+Route::group(['middleware' => ['role:admin'] , 'prefix'=>'admin'], function () {
    
-    Route::get('/dashboard', 'HomeController@index')->name('admin.dashboard');
+    Route::get('/dashboard', 'Admin\HomeController@index')->name('admin.dashboard');
+    Route::post('/request/changeStatus', 'RequestController@changeStatus')->name('requestChangeStatus');
 
 });
 

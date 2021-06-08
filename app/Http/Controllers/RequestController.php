@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\models\Request;
 
 use App\models\Video;
+use App\models\Summary;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -45,6 +46,22 @@ class RequestController extends Controller
 
         $requests =  $video->requests()->orderBy('created_at',"DESC")->get();
         return view('requests.view',compact('requests'));
+    }
+
+    public function changeStatus(\Illuminate\Http\Request $request)
+    {
+        if($request->submitRequest == "Accept")
+        {
+            Request::where('summary_id', $request->summaryId)->where('video_id', $request->videoId)->update(['status' => 'accepted']);
+            Summary::where('id', $request->summaryId)->update(['summary' => $request->summary]);
+            return redirect()->back()->with('info',"Summary accepted");
+        }
+
+        else if($request->submitRequest == "Reject")
+        {
+            Request::where('summary_id',$request->summaryId)->where('video_id', $request->videoId)->update(['status'=> 'rejected']);
+            return redirect()->back()->with('info',"Summary rejected");
+        }
     }
     
 }
