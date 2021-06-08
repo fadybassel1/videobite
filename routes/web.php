@@ -42,6 +42,11 @@ Route::group(['middleware' => ['role:user']], function () {
     // summary routes.
     Route::get('/summary/view/{id}', 'SummaryController@view')->name('summaryView');
     Route::get('/summary/update/{id}', 'SummaryController@update')->name('summaryUpdate');
+    
+    // notifications routes.
+    Route::get('/notifications', 'NotificationsController@unread')->name('notifications');
+    Route::get('/notifications/markallasread', 'NotificationsController@markallasread')->name('notifications.markallasread');
+    Route::get('/notifications/viewall', 'NotificationsController@viewall')->name('notifications.viewall');
 });
 
 
