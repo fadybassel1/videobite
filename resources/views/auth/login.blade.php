@@ -71,7 +71,7 @@
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    New to videoBite ? <a href="/register">Register now</a>
+                    New to VideoBite ? <a href="/register">Register Now!</a>
                 </div>
             </div>
         </div>

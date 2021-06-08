@@ -16,8 +16,8 @@
                     <div class="card-body">  
                         <ul class="list-group">
                             <li class="list-group-item"><a href="{{ route('RequestEdit', ['id'=>$video->id]) }}">Request edit summary</a></li>
-                            <li class="list-group-item"><a href="{{ route('VideoRequestsView', ['id'=>$video->id]) }}"> video Edit requests</a></li>
-                            <li class="list-group-item"><a href="{{ route('summaryView', ['id'=>$video->id]) }}">video summaries</a></li>
+                            <li class="list-group-item"><a href="{{ route('VideoRequestsView', ['id'=>$video->id]) }}"> Video edit requests</a></li>
+                            <li class="list-group-item"><a href="{{ route('summaryView', ['id'=>$video->id]) }}">Video summaries</a></li>
                           </ul>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
             </div>
             <div class="col-lg-3 col-md-12">
                 <div class="card text-center">
-                    <div style="background-color:#646ecb" class="card-header text-center text-white">Video timestamps</div>
+                    <div style="background-color:#646ecb" class="card-header text-center text-white">Video Timestamps</div>
                     <div class="card-body">
                         @forelse ($video['timestamps'] as $timestamp)
                             <h6><a  href=""> {{ $timestamp->start_time }} || {{ $timestamp->end_time }} </a> </h6>
@@ -62,7 +62,7 @@
                             <hr>
                         @empty
                         </div>
-                        <div class="alert alert-info">No timeStamps</div>
+                        <div class="alert alert-info">No Timestamps</div>
                     @endforelse
                 </div>
 
@@ -75,7 +75,7 @@
                         
                         @empty
                         </div>
-                        <div class="alert alert-info">No keywords</div>
+                        <div class="alert alert-info">No Keywords</div>
                     @endforelse
                 </div>
             </div>

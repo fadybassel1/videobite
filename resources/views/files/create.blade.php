@@ -41,7 +41,7 @@
                         <input type="file" name="file" accept=".mp4" hidden>
                         <br>
                         <div>
-                            <input type="text" class="form-control" name="title" placeholder="video title"
+                            <input type="text" class="form-control" name="title" placeholder="Video Title"
                                 style="display: none" required id="titleText">
                             <input type="submit" id="submitButton" class="btn btn-lg btn-primary" style="display: none"
                                 value="Submit">

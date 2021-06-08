@@ -31,7 +31,7 @@
         </div>
     </div>
 @empty
-    <div class="alert alert-info">There are no summaries for the video yet.</div>
+    <div class="alert alert-info">There are no summaries for this video yet.</div>
 @endforelse
 
 </div>

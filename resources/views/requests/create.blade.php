@@ -21,7 +21,7 @@
             </div>
             @else
             <div class="card">
-              <div class="alert alert-warning">You have a pending edit request for this video.</div> 
+              <div class="alert alert-warning">You already have a pending edit request for this video!</div> 
               <div class="card-body">
                   <div class="row">
                       <div class="col-8">
