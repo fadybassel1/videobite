@@ -24,6 +24,7 @@ Auth::routes();
 
 
 
+// user routes.
 
 Route::group(['middleware' => ['role:user']], function () {
    
