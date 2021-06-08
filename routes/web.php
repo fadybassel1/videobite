@@ -41,6 +41,7 @@ Route::group(['middleware' => ['role:user']], function () {
     
     // summary routes.
     Route::get('/summary/view/{id}', 'SummaryController@view')->name('summaryView');
+    Route::get('/summary/update/{id}', 'SummaryController@update')->name('summaryUpdate');
 });
 
 
@@ -63,3 +64,4 @@ Route::group(['middleware' => ['role:admin'] , 'prefix'=>'admin' , 'namespace'=>
 //     $role->givePermissionTo(['accept requests','view requests']);
 //     auth()->user()->assignRole('admin');
 // });
+

@@ -50,7 +50,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $request->summary }}</td>
-                                        <td>{{ $request->status }}</td>
+                                        <td> <input type="button" class="btn btn-primary btn-sm" value="{{ $request->status }}"></td>
                                     </tr>
                                 @endforeach
                             </tbody>

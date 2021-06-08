@@ -4,7 +4,16 @@
  
 <div class="container text-center">
 <h4>{{$video->title}}</h4>
-
+@if (session('success'))
+<div class="alert alert-success">
+    {!! session('success') !!}
+</div>
+@endif
+@if (session('error'))
+<div class="alert alert-danger">
+    {!! session('error') !!}
+</div>
+@endif
 @forelse ($summaries as $summary)
     <div class="card m-5">
         <div class="card-header text-muted">
@@ -15,7 +24,7 @@
         </div>
         <div class="card-footer">
             @if ($video->active_summary != $summary->id)
-            <a href="" class="btn btn-primary btn-sm">Assign as Active</a>    
+            <a href="{{ route('summaryUpdate', ['id'=>$summary->id]) }}" class="btn btn-primary btn-sm">Assign as Active</a>    
             @else
             <input type="button" disabled class="btn btn-success" value="Active">
             @endif

@@ -78,24 +78,26 @@ class VideoController extends Controller
     }
     public function updateSummary(Request $request)
     {
-        $results = json_decode($request->getContent(), true);
+        $results = $request->json()->all();
         $summary = new Summary(['video_id' => $results['video_id'],'summary'=>$results['summary']]);
-        foreach ($results['keywords'] as $keyword) {
-            $k =  new Keyword(['video_id' => $results['video_id'],'keyword'=> $keyword ]);
-            $k->save();
-        }
         
-        foreach ($results['timestamps'] as $timestamp) {
-            $t =  new Timestamp(['video_id' => $results['video_id'],'start'=> $timestamp['start'],'end'=> $timestamp['end'],'description'=> $timestamp['sentence'] ]);
+
+        for ($i=0; $i < count($results['timestamps']) ; $i++) { 
+            
+            $t =  new Timestamp(['video_id' => $results['video_id'],'start_time'=> strval($results['timestamps'][$i]['start']),'end_time'=> strval($results['timestamps'][$i]['end']),'description'=> $results['timestamps'][$i]['sentence'] ]);
             $t->save();
         }
-    
+
+        for ($i=0; $i < count($results['keywords']) ; $i++) { 
+            
+            $k =  new Keyword(['video_id' => $results['video_id'],'keyword'=> $results['keywords'][$i]['parsed_value'] ]);
+            $k->save();
+        }
+
         $video = Video::find($results['video_id']);
-        $summary =$video->summary()->save($summary);
+        $summary = $video->summary()->save($summary);
         $video->active_summary = $summary->id;
         $video->save();
-        // $video->active_summary=
-        // $video->keywords()->save($keywords);
         return response()->json(['success' => 'saved successfully']);
     }
     /**
