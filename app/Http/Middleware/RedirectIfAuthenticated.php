@@ -20,8 +20,8 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             if(auth()->user()->hasRole('admin'))
-            return redirect(RouteServiceProvider::HOME);
-            else return redirect(RouteServiceProvider::ADMINHOME);
+            return redirect(RouteServiceProvider::ADMINHOME);
+            else return redirect(RouteServiceProvider::HOME);
         }
 
         return $next($request);

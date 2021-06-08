@@ -24,6 +24,7 @@ Auth::routes();
 
 
 
+// user routes.
 
 Route::group(['middleware' => ['role:user']], function () {
    
@@ -42,6 +43,9 @@ Route::group(['middleware' => ['role:user']], function () {
     Route::get('/summary/view/{id}', 'SummaryController@view')->name('summaryView');
 });
 
+
+
+// admin routes.
 
 Route::group(['middleware' => ['role:admin'] , 'prefix'=>'admin' , 'namespace'=>'Admin'], function () {
    

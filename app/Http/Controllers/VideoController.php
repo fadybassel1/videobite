@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\models\Keyword;
 use App\models\Summary;
+use App\models\Timestamp;
 use Illuminate\Support\Facades\Http;
 use App\models\Video;
 use Illuminate\Http\Request;
@@ -65,7 +66,6 @@ class VideoController extends Controller
         $videoUpload->save();
         $message = $this->send_to_api($videoUpload->link,$FileName,$videoUpload->id);
         return redirect()->back()->with('info',$message);
-        //return response()->json(['success' => $FileName]);
     }
 
 
