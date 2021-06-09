@@ -47,7 +47,7 @@ class DataUpdated extends Notification implements ShouldQueue
         return (new MailMessage)
                     ->subject('Summary Generated')
                     ->greeting('Hello!')
-                    ->line('Data for the video you uploaded is now ready.')
+                    ->line('Data for the video titled "'. $this->video->title .'" you uploaded is now ready.')
                     ->action('View Now', $url)
                     ->line('Thank you for using our application!');
     }

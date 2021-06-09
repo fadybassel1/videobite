@@ -46,11 +46,11 @@ class VideoController extends Controller
     {
         if($request->file('file')->extension() != "mp4")
         {
-            return redirect()->back()->with('error', "File must be .mp4");
+            return redirect()->back()->with('error', "File extension must be .mp4");
         }
         if($request->title == null || $request->title == "")
         {
-            return redirect()->back()->with('error', "Video name is required");
+            return redirect()->back()->with('error', "Video name is required!");
         }
         
         $video = $request->file('file');
@@ -74,8 +74,8 @@ class VideoController extends Controller
         $link = str_replace('/','-',$link);
         $response = Http::get("http://192.168.0.16:8000/processvideo/$link/$id/$FileName");
         if($response->status()==200)
-        return "video sent to be processed";
-        else return "Something went wrong while sending the video to be processed";
+        return "Video is sent to be processed!";
+        else return "Something went wrong while sending the video to be processed!";
     }
     public function updateSummary(Request $request)
     {
@@ -101,9 +101,8 @@ class VideoController extends Controller
         $video->save();
         // $video->active_summary=
         // $video->keywords()->save($keywords);
-        /////////////////////////////////////////////////////////eb3at notification hena
         $user->notify(new DataUpdated($video));
-        return response()->json(['success' => 'saved successfully']);
+        return response()->json(['success' => 'Saved Successfully!']);
     }
     /**
      * Display the specified resource.
@@ -165,6 +164,6 @@ class VideoController extends Controller
         $fileUpload->delete();
 
         return redirect()->back()
-            ->with('success', 'File deleted successfully');
+            ->with('success', 'File deleted successfully!');
     }
 }

@@ -55,7 +55,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $request->summary }}</td>
-                                <td>{{ $request->status }}
+                                <td>{{ ucfirst($request->status) }}
                                     @if($request->status == "pending")
                                     <div class="row">
                                         <form action="{{ route('requestChangeStatus') }}" method="POST">
