@@ -8,6 +8,7 @@ use App\models\Summary;
 use App\models\Timestamp;
 use Illuminate\Support\Facades\Http;
 use App\models\Video;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -101,6 +102,7 @@ class VideoController extends Controller
         $video->save();
         // $video->active_summary=
         // $video->keywords()->save($keywords);
+        $user = User::find($video->user_id);
         $user->notify(new DataUpdated($video));
         return response()->json(['success' => 'Saved Successfully!']);
     }
@@ -114,7 +116,6 @@ class VideoController extends Controller
     {
         $video= Video::where('id',$video)->with('summary')->with('timestamps')->with('keywords')->first();
         if (auth()->user()->id == $video->user_id) {
-            //dd($video);
            return view('viewVideo',compact('video'));
         }
     }
