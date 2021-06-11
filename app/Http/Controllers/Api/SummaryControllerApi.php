@@ -13,7 +13,14 @@ class SummaryControllerApi extends Controller
    {
       $video = auth()->user()->videos()->find($video);
       $summaries = $video->summaries()->get();
-      return $summaries;
+      return response()->json([
+         'status' => true,
+         'data' => [
+            'active_summary_id' => $video->summary->id,
+            'summaries' => $summaries
+         ],
+         'message'=> 'success',
+      ]);
    }
 
    public function update($summary)

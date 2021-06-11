@@ -64,7 +64,8 @@ class RequestController extends Controller
         if($request->submitRequest == "Accept")
         {
             Request::where('summary_id', $request->summaryId)->where('video_id', $request->videoId)->update(['status' => 'accepted']);
-            Summary::where('id', $request->summaryId)->update(['summary' => $request->summary]);
+            $summary = new Summary(['video_id' => $request->videoId,'summary'=> $request->summary]);
+            $summary->save();
             User::find($video->user_id)->notify(new Requests($request->videoId,"Accepted"));
             return redirect()->back()->with('info',"Summary Accepted!");
         }
