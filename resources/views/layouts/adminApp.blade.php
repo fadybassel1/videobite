@@ -64,6 +64,12 @@
                                 <a class="nav-link" href="{{ route('files.index') }}">Summarize Video</a>
                             </li>
                         </ul> --}}
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.manageUsers') }}">Manage Users</a>
+                            </li>
+                        </ul>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ ucfirst(Auth::user()->name) }}
