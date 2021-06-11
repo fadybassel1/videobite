@@ -53,6 +53,8 @@ Route::group(['middleware' => ['role:user']], function () {
 Route::group(['middleware' => ['role:admin'] , 'prefix'=>'admin'], function () {
    
     Route::get('/dashboard', 'Admin\HomeController@index')->name('admin.dashboard');
+    Route::get('/manageUsers', 'Admin\HomeController@manageUsers')->name('admin.manageUsers');
+    Route::delete('/manageUsers/{id}', 'Admin\HomeController@deleteUser')->name('admin.userDelete');
     Route::post('/request/changeStatus', 'RequestController@changeStatus')->name('requestChangeStatus');
 
 });
