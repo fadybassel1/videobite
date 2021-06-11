@@ -59,7 +59,11 @@ class RequestControllerApi extends Controller
     {
         $video =  auth()->user()->videos()->where('id',$video_id)->first();
 
-        return $video->requests()->orderBy('created_at',"DESC")->get();
+        return response()->json([
+            'status' => true,
+            'data' => $video->requests()->orderBy('created_at',"DESC")->get(),
+            'message' => "success",
+        ]);
     }
 
     public function changeStatus(\Illuminate\Http\Request $request)

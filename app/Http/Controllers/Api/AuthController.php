@@ -13,7 +13,7 @@ class AuthController extends Controller
         $validatedData = $request->validate([
             'name'=>'required|max:55',
             'email'=>'email|required|unique:users',
-            'password'=>'required|confirmed'
+            'password'=>'required'
         ]);
 
         $validatedData['password'] = bcrypt($request->password);
@@ -22,8 +22,14 @@ class AuthController extends Controller
 
         $accessToken = $user->createToken('authToken')->accessToken;
 
-        return response(['user'=> $user, 'access_token'=> $accessToken]);
-       
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'user' => $user,
+                'access_token' => $accessToken,
+            ],
+            'message' => 'success',
+        ]);
    }
 
 

@@ -45,11 +45,11 @@ Route::group(['middleware' => ['auth:api'], 'namespace' => 'Api'], function () {
     Route::get('/summary/view/{id}', 'SummaryControllerApi@view')->name('summaryView');
     Route::get('/summary/update/{id}', 'SummaryControllerApi@update')->name('summaryUpdate');
     
-    // // notifications routes.
+    // // notifi        cations routes.
     // Route::get('/notifications', 'NotificationsController@unread')->name('notifications');
     // Route::get('/notifications/markallasread', 'NotificationsController@markallasread')->name('notifications.markallasread');
     // Route::get('/notifications/viewall', 'NotificationsController@viewall')->name('notifications.viewall');
-    Route::post('/logout', 'Api\AuthController@logout');
+    Route::post('/logout', 'AuthController@logout');
 });
 
 Route::post('/register', 'Api\AuthController@register');
