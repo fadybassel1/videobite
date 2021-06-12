@@ -31,8 +31,8 @@
 
                 <div class="drag-area">
                     <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                    <header>Drag & Drop to Upload File</header>
-                    <span>OR</span>
+                    <header>Upload File</header>
+                  
                     <button type="button">Browse File</button>
                 </div>
 
@@ -154,26 +154,26 @@
         });
 
 
-        //If user Drag File Over DropArea
-        dropArea.addEventListener("dragover", (event) => {
-            event.preventDefault(); //preventing from default behaviour
-            dropArea.classList.add("active");
-            dragText.textContent = "Release to Upload File";
-        });
+        // //If user Drag File Over DropArea
+        // dropArea.addEventListener("dragover", (event) => {
+        //     event.preventDefault(); //preventing from default behaviour
+        //     dropArea.classList.add("active");
+        //     dragText.textContent = "Release to Upload File";
+        // });
 
-        //If user leave dragged File from DropArea
-        dropArea.addEventListener("dragleave", () => {
-            dropArea.classList.remove("active");
-            dragText.textContent = "Drag & Drop to Upload File";
-        });
+        // //If user leave dragged File from DropArea
+        // dropArea.addEventListener("dragleave", () => {
+        //     dropArea.classList.remove("active");
+        //     dragText.textContent = "Drag & Drop to Upload File";
+        // });
 
-        //If user drop File on DropArea
-        dropArea.addEventListener("drop", (event) => {
-            event.preventDefault(); //preventing from default behaviour
-            //getting user select file and [0] this means if user select multiple files then we'll select only the first one
-            file = event.dataTransfer.files[0];
-            showFile(); //calling function
-        });
+        // //If user drop File on DropArea
+        // dropArea.addEventListener("drop", (event) => {
+        //     event.preventDefault(); //preventing from default behaviour
+        //     //getting user select file and [0] this means if user select multiple files then we'll select only the first one
+        //     file = event.dataTransfer.files[0];
+        //     showFile(); //calling function
+        // });
 
         function showFile() {
             let fileType = file.type; //getting selected file type
@@ -184,7 +184,7 @@
                     let fileURL = fileReader.result; //passing user file source in fileURL variable
                     // UNCOMMENT THIS BELOW LINE. I GOT AN ERROR WHILE UPLOADING THIS POST SO I COMMENTED IT
                     let imgTag =
-                        `<video> <source src ="${fileURL}"> </video>`; //creating an img tag and passing user selected file source inside src attribute
+                        `<video width="100%"> <source src ="${fileURL}"> </video>`; //creating an img tag and passing user selected file source inside src attribute
                     dropArea.innerHTML = imgTag; //adding that created img tag inside dropArea container
                 }
                 fileReader.readAsDataURL(file);
@@ -193,7 +193,7 @@
             } else {
                 alert("This is not a video File!");
                 dropArea.classList.remove("active");
-                dragText.textContent = "Drag & Drop to Upload File";
+                dragText.textContent = "Upload File";
             }
         }
 

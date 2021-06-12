@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.adminApp')
 @section('content')
 @if(Session::has('status'))
 <div class="container alert alert-success" role="alert">

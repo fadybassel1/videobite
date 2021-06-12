@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Notifications\DataUpdated;
 use App\models\Keyword;
+use App\models\Request as ModelsRequest;
 use App\models\Summary;
 use App\models\Timestamp;
 use Illuminate\Support\Facades\Http;
@@ -45,54 +46,55 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->file('file')->extension() != "mp4")
-        {
+        if ($request->file('file')->extension() != "mp4") {
             return redirect()->back()->with('error', "File extension must be .mp4");
         }
-        if($request->title == null || $request->title == "")
-        {
+        if ($request->title == "") {
             return redirect()->back()->with('error', "Video name is required!");
         }
-        
+
         $video = $request->file('file');
-        $FileName = explode('.',$video->getClientOriginalName())[0];
-        $FileUniqueName = uniqid($FileName.'$').".".$video->getClientOriginalExtension();
+        $FileName = explode('.', $video->getClientOriginalName())[0];
+        $FileUniqueName = uniqid($FileName . '$') . "." . $video->getClientOriginalExtension();
         $path = Storage::putFileAs(
-            'public/userVideos/'.auth()->user()->id,$video,$FileUniqueName
+            'public/userVideos/' . auth()->user()->id,
+            $video,
+            $FileUniqueName
         );
         $videoUpload = new Video();
         $videoUpload->title = $request->title;
-        $videoUpload->link = "/storage/userVideos/".auth()->user()->id."/".$FileUniqueName;
+        $videoUpload->link = "/storage/userVideos/" . auth()->user()->id . "/" . $FileUniqueName;
         $videoUpload->flag = "1";
         $videoUpload->user_id = auth()->user()->id;
         $videoUpload->save();
-        $message = $this->send_to_api($videoUpload->link,$FileName,$videoUpload->id);
-        return redirect()->back()->with('info',$message);
+        $message = $this->send_to_api($videoUpload->link, $FileName, $videoUpload->id);
+        return redirect()->back()->with('info', $message);
     }
 
 
-    private function send_to_api($link,$FileName,$id){
-        $link = str_replace('/','-',$link);
+    private function send_to_api($link, $FileName, $id)
+    {
+        $link = str_replace('/', '-', $link);
         $response = Http::get("http://192.168.0.16:8000/processvideo/$link/$id/$FileName");
-        if($response->status()==200)
-        return "Video is sent to be processed!";
+        if ($response->status() == 200)
+            return "Video is sent to be processed!";
         else return "Something went wrong while sending the video to be processed!";
     }
     public function updateSummary(Request $request)
     {
         $results = $request->json()->all();
-        $summary = new Summary(['video_id' => $results['video_id'],'summary'=>$results['summary']]);
-        
+        $summary = new Summary(['video_id' => $results['video_id'], 'summary' => $results['summary']]);
 
-        for ($i=0; $i < count($results['timestamps']) ; $i++) { 
-            
-            $t =  new Timestamp(['video_id' => $results['video_id'],'start_time'=> strval($results['timestamps'][$i]['start']),'end_time'=> strval($results['timestamps'][$i]['end']),'description'=> $results['timestamps'][$i]['sentence'] ]);
+
+        for ($i = 0; $i < count($results['timestamps']); $i++) {
+
+            $t =  new Timestamp(['video_id' => $results['video_id'], 'start_time' => strval($results['timestamps'][$i]['start']), 'end_time' => strval($results['timestamps'][$i]['end']), 'description' => $results['timestamps'][$i]['sentence']]);
             $t->save();
         }
 
-        for ($i=0; $i < count($results['keywords']) ; $i++) { 
-            
-            $k =  new Keyword(['video_id' => $results['video_id'],'keyword'=> $results['keywords'][$i]['parsed_value'] ]);
+        for ($i = 0; $i < count($results['keywords']); $i++) {
+
+            $k =  new Keyword(['video_id' => $results['video_id'], 'keyword' => $results['keywords'][$i]['parsed_value']]);
             $k->save();
         }
 
@@ -114,9 +116,13 @@ class VideoController extends Controller
      */
     public function show($video)
     {
-        $video= Video::where('id',$video)->with('summary')->with('timestamps')->with('keywords')->first();
-        if (auth()->user()->id == $video->user_id) {
-           return view('viewVideo',compact('video'));
+        $video = Video::where('id', $video)->with('summary')->with('timestamps')->with('keywords')->first();
+        if ($video != null) {
+            if (auth()->user()->id == $video->user_id) {
+                return view('viewVideo', compact('video'));
+            }
+        }else{
+            return redirect()->back()->with('error','wrong path');
         }
     }
 
@@ -151,18 +157,11 @@ class VideoController extends Controller
      */
     public function destroy($id)
     {
-
-        $fileUpload = Video::find($id);
+        $video = Video::find($id);
+        $this->authorize('delete_video', $video);
         $summary = Summary::where('video_id', $id);
-        if($fileUpload->flag == 1)
-        {
-            $path = public_path().$fileUpload->link;
-            if(file_exists($path))
-                unlink($path);
-        }
-        
-        $summary->delete();
-        $fileUpload->delete();
+        ModelsRequest::where('video_id', $video->id)->delete();
+        $video->delete();
 
         return redirect()->back()
             ->with('success', 'File deleted successfully!');

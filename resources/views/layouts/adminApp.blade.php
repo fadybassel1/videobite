@@ -76,11 +76,11 @@
                                 </a>
                                 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('notifications') }}"
+                                    {{-- <a class="dropdown-item" href="{{ route('notifications') }}"
                                         onclick="">
                                         {{ __('Notifications') }}
                                             <p style="float: right;">{{count(auth()->user()->unreadNotifications)}}</p>
-                                    </a>
+                                    </a> --}}
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

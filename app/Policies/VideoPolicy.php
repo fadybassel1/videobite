@@ -32,4 +32,8 @@ class VideoPolicy
     {
         return $user->id === $video->user_id ? response::allow() : response::deny('You do not own this video.');
     }
+
+    public function delete_video(User $user, Video $video){
+        return $user->id === $video->user_id ? response::allow() : response::deny('You do not own this video.');
+    }
 }

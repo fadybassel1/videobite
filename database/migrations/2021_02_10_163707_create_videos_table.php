@@ -22,6 +22,7 @@ class CreateVideosTable extends Migration
             $table->BigInteger('active_summary')->unsigned();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->softDeletes();
             $table->foreign('active_summary')->references('id')->on('summaries');
         });
     }
