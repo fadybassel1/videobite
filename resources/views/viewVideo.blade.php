@@ -7,6 +7,11 @@
     {!! session('info') !!}
 </div>
 @endif
+@if ($info ?? false)
+<div class="alert alert-info text-center">
+    Your video is currently being processed you can leave this page and you'll be notified when it's ready.
+</div>
+@endif
         <h4 class="display-4 text-center d-none d-md-block" style="color:#646ecb"> {{ $video->title }}</h4>
         <h5 class="display-5 text-center  d-md-none" style="color:#646ecb"> {{ $video->title }}</h5>
         <div class="row justify-content-around">

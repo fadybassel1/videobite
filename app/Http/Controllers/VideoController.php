@@ -68,14 +68,15 @@ class VideoController extends Controller
         $videoUpload->user_id = auth()->user()->id;
         $videoUpload->save();
         $message = $this->send_to_api($videoUpload->link, $FileName, $videoUpload->id);
-        return redirect()->back()->with('info', $message);
+        $video = $videoUpload;
+        $info = true;
+        return view('viewVideo', compact('video','info'));
     }
-
 
     private function send_to_api($link, $FileName, $id)
     {
         $link = str_replace('/', '-', $link);
-        $response = Http::get("http://192.168.0.16:8000/processvideo/$link/$id/$FileName");
+        $response = Http::get("http://192.168.0.100:8000/processvideo/$link/$id/$FileName");
         if ($response->status() == 200)
             return "Video is sent to be processed!";
         else return "Something went wrong while sending the video to be processed!";
